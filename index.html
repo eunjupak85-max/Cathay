@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Employee Benefits Portal</title>
+  <style>
+    :root{
+      --bg:#0b1220;--fg:#e8f0ff;--muted:#a5b4d4;--brand:#00b8d9;--card:#101a2f;--line:#1b2a48;--radius:18px
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,rgba(0,184,217,.16),transparent 40%),
+                        radial-gradient(900px 500px at -10% 10%,rgba(132,225,240,.08),transparent 40%),
+                        var(--bg);color:var(--fg);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+
+    /* header */
+    header{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line)}
+    .logo{width:42px;height:42px;border-radius:12px;background:radial-gradient(circle at 30% 30%,#84e1f0,#00b8d9);box-shadow:0 6px 14px rgba(0,184,217,.35)}
+    h1{font-size:20px;margin:0 0 2px}
+    .kicker{color:var(--muted);font-size:13px}
+
+    /* search */
+    .toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:16px 24px}
+    .search{flex:1;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:10px 14px}
+    .search input{flex:1;background:transparent;border:0;outline:none;color:var(--fg)}
+    .pill{border:1px dashed var(--line);color:var(--muted);padding:8px 12px;border-radius:999px}
+
+    /* grid */
+    .wrap{max-width:1200px;margin:0 auto;padding:0 24px 32px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .card{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--card)}
+    .card img{width:100%;height:180px;object-fit:cover;display:block;filter:saturate(1.1)}
+    .card .label{position:absolute;left:12px;bottom:12px;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);padding:8px 10px;border-radius:12px;font-weight:600}
+    .card:focus-within,.card:hover{outline:2px solid rgba(0,184,217,.4)}
+
+    /* empty states */
+    .empty{margin:28px 0;padding:20px;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}
+
+    footer{padding:22px 24px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" aria-hidden="true"></div>
+    <div>
+      <h1>Employee Benefits</h1>
+      <div class="kicker">Browse company benefits • Simple index (placeholder)</div>
+    </div>
+  </header>
+
+  <div class="toolbar wrap">
+    <div class="search" role="search">
+      <span aria-hidden="true">🔎</span>
+      <input type="search" placeholder="Search benefits (e.g., Medical, Visa, Travel)" aria-label="Search benefits" />
+    </div>
+    <div class="pill">This is a minimal landing page. Link targets are placeholders.</div>
+  </div>
+
+  <main class="wrap" aria-live="polite">
+    <section aria-label="benefit categories">
+      <div class="grid">
+        <!-- Airline-style imagery (placeholders) -->
+        <a class="card" href="#" aria-label="Medical & Insurance (coming soon)">
+          <img src="https://picsum.photos/seed/air-med/800/480" alt="Wing over clouds" />
+          <div class="label">Medical & Insurance</div>
+        </a>
+        <a class="card" href="#" aria-label="Travel Perks (coming soon)">
+          <img src="https://picsum.photos/seed/air-travel/800/480" alt="Runway at sunset" />
+          <div class="label">Travel Perks</div>
+        </a>
+        <a class="card" href="#" aria-label="Crew Visa Reimbursement (coming soon)">
+          <img src="https://picsum.photos/seed/air-visa/800/480" alt="Passport and boarding pass" />
+          <div class="label">Crew Visa Reimbursement</div>
+        </a>
+        <a class="card" href="#" aria-label="Wellbeing & Fitness (coming soon)">
+          <img src="https://picsum.photos/seed/air-well/800/480" alt="Cabin sunshine" />
+          <div class="label">Wellbeing</div>
+        </a>
+        <a class="card" href="#" aria-label="Retirement & Savings (coming soon)">
+          <img src="https://picsum.photos/seed/air-retire/800/480" alt="Horizon over ocean" />
+          <div class="label">Retirement & Savings</div>
+        </a>
+        <a class="card" href="#" aria-label="Allowances & Reimbursements (coming soon)">
+          <img src="https://picsum.photos/seed/air-allow/800/480" alt="Aircraft cabin detail" />
+          <div class="label">Allowances</div>
+        </a>
+      </div>
+
+      <div class="empty" role="status">
+        Coming soon: link each card to your internal policy pages or SuccessFactors tiles. Replace the placeholder images/labels as needed.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © Company • Minimal Benefits Index • Replace placeholder images (picsum.photos) with airline brand assets when ready.
+  </footer>
+</body>
+</html>
