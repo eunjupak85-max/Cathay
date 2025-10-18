@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cathay Pacific • Crew Visa Reimbursement</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #ffffff;
+      color: #222;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    header img {
+      max-width: 120px;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      color: #004c80;
+    }
+    header p {
+      color: #666;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      color: #004c80;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f7f9fc;
+    }
+    .note {
+      background-color: #f8f9fa;
+      border-left: 4px solid #00a3b8;
+      padding: 12px;
+      margin: 20px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+      color: #777;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://www.cathaypacific.com/content/dam/header-footer-lrp/cathay-en.originalimage.svg" alt="Cathay Pacific logo">
+    <h1>Crew Visa Reimbursement Policy</h1>
+    <p>For Cabin Crew & Cockpit Crew | Monthly Claim Window: 1st–15th</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Eligibility & Attachment Policy</h2>
+      <p>This reimbursement applies to <strong>Cabin Crew</strong> and <strong>Cockpit Crew</strong> who pay visa fees related to official duty travel. All claims must include a single document as proof.</p>
+      <ul>
+        <li><strong>One document only:</strong> Visa fee receipt or approved e‑Visa copy</li>
+        <li>Accepted formats: PDF (preferred), JPG, PNG</li>
+        <li>Submission period: 1st–15th of each month (via SuccessFactors)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Pre‑defined Crew Visa Types by Country</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Country/Region</th>
+            <th>Visa Type (Official Name)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>United States</td><td><strong>C1/D</strong> (Crewmember & Transit)</td><td>Duty travel; max stay ~29 days; crew on‑duty entry.</td></tr>
+          <tr><td>China (Mainland)</td><td><strong>C</strong> (Crew) Visa</td><td>Requires airline letter; validity varies by route.</td></tr>
+          <tr><td>Australia</td><td><strong>Crew Travel Authority</strong> (Subclass 942)</td><td>Electronic permit managed via airline.</td></tr>
+          <tr><td>Japan</td><td>Crew Landing Permission</td><td>Most enter via crew manifest; some nationalities need visa.</td></tr>
+          <tr><td>United Kingdom</td><td>Aircrew Permission / Visitor for Crew</td><td>On‑duty entry; depends on nationality.</td></tr>
+          <tr><td>Schengen (Germany, France, etc.)</td><td><strong>C‑type Crew Member</strong></td><td>Often covered by crew certificate; some require visa.</td></tr>
+          <tr><td>India</td><td><strong>C</strong> (Crew) Visa</td><td>Multi‑entry up to 1 year typical.</td></tr>
+          <tr><td>UAE (Dubai, Abu Dhabi)</td><td>Crew Member Visa</td><td>Airline‑sponsored; validity 60–90 days; multi‑entry.</td></tr>
+          <tr><td>Hong Kong SAR</td><td>Crew Entry/Landing Permit</td><td>Home base crew exempt; foreign crew may need permit.</td></tr>
+          <tr><td>Korea</td><td><strong>C‑3‑91</strong> (Crew)</td><td>For foreign airline crew on short duty stays.</td></tr>
+          <tr><td>Thailand</td><td><strong>C</strong> (Crew)</td><td>Short‑stay crew visa; airline letter required.</td></tr>
+          <tr><td>Canada</td><td>Work Permit Exemption (R186(s))</td><td>Carry employment letter as proof.</td></tr>
+        </tbody>
+      </table>
+      <div class="note">This list is indicative. The Crew Visa Desk will confirm specific document and timing requirements per route.</div>
+    </section>
+  </main>
+
+  <footer>
+    © Cathay Pacific • Crew Visa Reimbursement • Last updated <span id="lastUpdated"></span>
+  </footer>
+  <script>
+    document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'2-digit'});
+  </script>
+</body>
+</html>
