@@ -160,7 +160,7 @@
           .map(t => `<option value="${t}" ${t===r.type?'selected':''}>${t}</option>`).join('');
         tr.innerHTML = `
           <td>${r.requestedOn}</td>
-          <td><input type="date" id="editDate_${i}" value="${r.effectiveDate}" min="${fmt(addDays(new Date(),60))}"></td>
+          <td><input type="date" id="editDate_${i}" value="${r.effectiveDate}" min="${fmt(addDays(new Date(),61))}"></td>
           <td><select id="editCat_${i}">${catOptions}</select></td>
           <td><select id="editType_${i}">${typeOptions}</select></td>
           <td class="actions">
@@ -234,3 +234,4 @@
 
 </body>
 </html>
+
