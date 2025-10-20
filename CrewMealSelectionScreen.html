@@ -10,61 +10,32 @@
     background-color: #F6F6F6;
     color: #333333;
     margin: 40px auto;
-    max-width: 750px;
+    max-width: 900px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
-  h1 {
-    color: #00666A;
-    text-align: center;
-  }
+  h1 { color: #00666A; text-align: center; }
   .notice {
-    background-color: #E9F7F7;
-    border-left: 5px solid #007C7C;
-    padding: 10px 15px;
-    margin-bottom: 20px;
+    background-color: #E9F7F7; border-left: 5px solid #007C7C;
+    padding: 10px 15px; margin-bottom: 20px;
   }
-  label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: 600;
-  }
+  label { display:block; margin:10px 0 5px; font-weight:600; }
   select, input[type="date"], button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
+    width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc;
+    border-radius:6px; font-size:15px;
   }
-  button {
-    background-color: #00666A;
-    color: white;
-    cursor: pointer;
-    border: none;
-  }
-  button:hover {
-    background-color: #007C7C;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 25px;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px 10px;
-    text-align: left;
-  }
-  th {
-    background-color: #EDEDED;
-  }
-  .empty {
-    text-align: center;
-    color: #777;
-    font-style: italic;
-  }
+  button { background-color:#00666A; color:#fff; cursor:pointer; border:none; }
+  button:hover { background-color:#007C7C; }
+  .btn-inline { width:auto; padding:6px 10px; margin:0 6px 6px 0; font-size:13px; }
+  .btn-secondary { background:#555; }
+  .btn-danger { background:#b23a3a; }
+  table { width:100%; border-collapse:collapse; margin-top:25px; }
+  th, td { border:1px solid #ccc; padding:8px 10px; text-align:left; vertical-align:top; }
+  th { background-color:#EDEDED; }
+  .actions { white-space:nowrap; }
+  .row-editing td { background:#fff7e6; }
+  .tip { font-size:12px; color:#555; margin-top:-6px; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -72,7 +43,7 @@
 <h1>Cathay Pacific – Crew Meal Request</h1>
 
 <div class="notice">
-  🍽️ You can apply for your in-flight meal up to <strong>2 months (61 days)</strong> in advance.
+  🍽️ You can apply for your in-flight meal up to <strong>2 months (60 days)</strong> in advance.
 </div>
 
 <form id="mealForm">
@@ -93,6 +64,7 @@
   <select id="mealType" required disabled>
     <option value="">-- Select Type --</option>
   </select>
+  <div class="tip">Note: Edit/Delete are not available within 60 days of effective date.</div>
 
   <button type="submit">Submit Meal Request</button>
 </form>
@@ -105,48 +77,40 @@
       <th>Effective Date</th>
       <th>Meal Category</th>
       <th>Meal Type</th>
+      <th>Actions</th>
     </tr>
   </thead>
-  <tbody id="requestList">
-    <tr><td>2025-05-10</td><td>2025-07-15</td><td>Vegetarian</td><td>Lacto-Ovo Vegetarian Meal (VLML)</td></tr>
-    <tr><td>2025-06-01</td><td>2025-08-20</td><td>Religious</td><td>Hindu Meal (HNML)</td></tr>
-    <tr><td>2025-07-05</td><td>2025-09-12</td><td>Medical</td><td>Low Fat Meal (LFML)</td></tr>
-  </tbody>
+  <tbody id="requestList"></tbody>
 </table>
 
 <script>
-  // --- Pre-set Effective Date: Today + 60 days ---
-  const dateInput = document.getElementById('effectiveDate');
+  // ---------- Utility ----------
+  const fmt = (d) => new Date(d).toISOString().split('T')[0];
   const today = new Date();
-  const twoMonthsLater = new Date(today.setDate(today.getDate() + 61));
-  dateInput.valueAsDate = twoMonthsLater;
-
-  // --- Meal Category & Type 2-tier logic ---
-  const mealOptions = {
-    "Standard": [
-      "Asian Meal (ASML)",
-      "Western Meal (WSML)"
-    ],
-    "Vegetarian": [
-      "Lacto-Ovo Vegetarian Meal (VLML)",
-      "Vegan Meal (VGML)"
-    ],
-    "Vegan": [
-      "Strict Vegan Meal (VGML)",
-      "Raw Vegetable Meal (RVML)"
-    ],
-    "Religious": [
-      "Hindu Meal (HNML)",
-      "Muslim Meal (MOML)",
-      "Kosher Meal (KSML)"
-    ],
-    "Medical": [
-      "Low Fat Meal (LFML)",
-      "Low Calorie Meal (LCML)",
-      "Gluten-Free Meal (GFML)"
-    ]
+  const addDays = (date, days) => {
+    const d = new Date(date.getTime());
+    d.setDate(d.getDate() + days);
+    return d;
+  };
+  const daysUntil = (dateStr) => {
+    const now = new Date();
+    const d = new Date(dateStr + 'T00:00:00');
+    return Math.floor((d - now) / (1000*60*60*24));
   };
 
+  // ---------- Preset Effective Date ----------
+  const dateInput = document.getElementById('effectiveDate');
+  dateInput.value = fmt(addDays(today, 60));
+  dateInput.min = fmt(addDays(today, 60));
+
+  // ---------- 2-tier Meal ----------
+  const mealOptions = {
+    "Standard": ["Asian Meal (ASML)","Western Meal (WSML)"],
+    "Vegetarian": ["Lacto-Ovo Vegetarian Meal (VLML)","Vegan Meal (VGML)"],
+    "Vegan": ["Strict Vegan Meal (VGML)","Raw Vegetable Meal (RVML)"],
+    "Religious": ["Hindu Meal (HNML)","Muslim Meal (MOML)","Kosher Meal (KSML)"],
+    "Medical": ["Low Fat Meal (LFML)","Low Calorie Meal (LCML)","Gluten-Free Meal (GFML)"]
+  };
   const categorySelect = document.getElementById('mealCategory');
   const typeSelect = document.getElementById('mealType');
 
@@ -155,10 +119,10 @@
     typeSelect.innerHTML = '<option value="">-- Select Type --</option>';
     if (selectedCategory && mealOptions[selectedCategory]) {
       mealOptions[selectedCategory].forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type;
-        typeSelect.appendChild(option);
+        const opt = document.createElement('option');
+        opt.value = type;
+        opt.textContent = type;
+        typeSelect.appendChild(opt);
       });
       typeSelect.disabled = false;
     } else {
@@ -166,33 +130,106 @@
     }
   });
 
-  // --- Form Submission ---
-  const form = document.getElementById('mealForm');
+  // ---------- Data ----------
+  let requests = [
+    { requestedOn: "2025-05-10", effectiveDate: "2025-07-15", category: "Vegetarian", type: "Lacto-Ovo Vegetarian Meal (VLML)" },
+    { requestedOn: "2025-06-01", effectiveDate: "2025-08-20", category: "Religious", type: "Hindu Meal (HNML)" },
+    { requestedOn: "2025-07-05", effectiveDate: "2025-09-12", category: "Medical", type: "Low Fat Meal (LFML)" }
+  ];
+  let editingIndex = null;
+
   const requestList = document.getElementById('requestList');
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const effectiveDate = new Date(document.getElementById('effectiveDate').value);
-    const mealCategory = categorySelect.value;
-    const mealType = typeSelect.value;
-    const now = new Date();
-    const diffDays = (effectiveDate - now) / (1000 * 60 * 60 * 24);
-
-    if (diffDays < 60) {
-      alert("⚠️ Please select an effective date at least 60 days in advance.");
+  function renderTable() {
+    requestList.innerHTML = "";
+    if (!requests.length) {
+      requestList.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#777;font-style:italic;">No requests yet.</td></tr>`;
       return;
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${todayStr}</td><td>${effectiveDate.toISOString().split('T')[0]}</td><td>${mealCategory}</td><td>${mealType}</td>`;
-    requestList.appendChild(row);
+    requests.forEach((r,i) => {
+      const canEdit = daysUntil(r.effectiveDate) >= 61;
+      const canDelete = daysUntil(r.effectiveDate) >= 61;
+      const tr = document.createElement('tr');
+      if (editingIndex === i) tr.classList.add('row-editing');
 
-    form.reset();
-    typeSelect.disabled = true;
-    alert("✅ Your meal request has been submitted successfully!");
+      if (editingIndex === i) {
+        const catOptions = Object.keys(mealOptions)
+          .map(cat => `<option value="${cat}" ${cat===r.category?'selected':''}>${cat}</option>`).join('');
+        const typeOptions = (mealOptions[r.category]||[])
+          .map(t => `<option value="${t}" ${t===r.type?'selected':''}>${t}</option>`).join('');
+        tr.innerHTML = `
+          <td>${r.requestedOn}</td>
+          <td><input type="date" id="editDate_${i}" value="${r.effectiveDate}" min="${fmt(addDays(new Date(),60))}"></td>
+          <td><select id="editCat_${i}">${catOptions}</select></td>
+          <td><select id="editType_${i}">${typeOptions}</select></td>
+          <td class="actions">
+            <button class="btn-inline" onclick="saveEdit(${i})">Save</button>
+            <button class="btn-inline btn-secondary" onclick="cancelEdit()">Cancel</button>
+          </td>`;
+        setTimeout(()=>{
+          document.getElementById(`editCat_${i}`).addEventListener('change', e=>{
+            const cat=e.target.value;
+            const typeSel=document.getElementById(`editType_${i}`);
+            typeSel.innerHTML='';
+            (mealOptions[cat]||[]).forEach(t=>{
+              const opt=document.createElement('option');
+              opt.value=t; opt.textContent=t; typeSel.appendChild(opt);
+            });
+          });
+        },0);
+      } else {
+        tr.innerHTML = `
+          <td>${r.requestedOn}</td>
+          <td>${r.effectiveDate}</td>
+          <td>${r.category}</td>
+          <td>${r.type}</td>
+          <td class="actions">
+            ${canEdit ? `<button class="btn-inline" onclick="startEdit(${i})">Edit</button>` : ""}
+            ${canDelete ? `<button class="btn-inline btn-danger" onclick="deleteRow(${i})">Delete</button>` : ""}
+          </td>`;
+      }
+      requestList.appendChild(tr);
+    });
+  }
+
+  window.startEdit = (i)=>{ editingIndex=i; renderTable(); };
+  window.cancelEdit = ()=>{ editingIndex=null; renderTable(); };
+  window.saveEdit = (i)=>{
+    const d=document.getElementById(`editDate_${i}`).value;
+    const c=document.getElementById(`editCat_${i}`).value;
+    const t=document.getElementById(`editType_${i}`).value;
+    if(!d||!c||!t){ alert("⚠️ Complete all fields."); return; }
+    if(daysUntil(d)<60){ alert("⚠️ Must be at least 60 days ahead."); return; }
+    requests[i]={...requests[i], effectiveDate:d, category:c, type:t};
+    editingIndex=null;
+    renderTable();
+    alert("✅ Changes saved.");
+  };
+  window.deleteRow = (i)=>{
+    if(!confirm("Delete this meal request?"))return;
+    requests.splice(i,1);
+    renderTable();
+  };
+
+  // ---------- New Request ----------
+  const form=document.getElementById('mealForm');
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const effDate=fmt(new Date(document.getElementById('effectiveDate').value));
+    const cat=categorySelect.value;
+    const type=typeSelect.value;
+    if(daysUntil(effDate)<60){ alert("⚠️ Date must be ≥60 days in future."); return; }
+    if(!cat||!type){ alert("⚠️ Choose category and type."); return; }
+    const todayStr=fmt(new Date());
+    requests.push({requestedOn:todayStr,effectiveDate:effDate,category:cat,type:type});
+    form.reset(); typeSelect.disabled=true;
+    dateInput.value=fmt(addDays(new Date(),60));
+    alert("✅ Request submitted.");
+    renderTable();
   });
+
+  renderTable();
 </script>
 
 </body>
